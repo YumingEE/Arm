@@ -1,0 +1,13 @@
+add  加法指令
+    add r0, r1, #4  // r0 = r1 + 4
+    add r0, #4      // r0 = r0 + 4 (i +=  4)
+    adds            会根据运算结果改变cpsr标志位
+    adc             带进位的加法(64位加法)
+    adc r0, r1, #4  // r0 = r1 +４ + C
+	
+sub  减法指令
+    sub r0, r1, #4  // r0 = r1 - 4
+    sub r0, #4      // r0 = r0 - 4 (i -=  4)
+    subs            会根据运算结果改变cpsr的标志位
+    sbc             带借位的减法
+    sbc r0, r1, #4  // r0 = r1 - 4 - !C
