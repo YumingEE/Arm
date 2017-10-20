@@ -1,0 +1,44 @@
+arm的寄存器:
+arm的寄存器都是32位
+cortex-a9核心有43个寄存器
+
+通用寄存器:存储数据
+r0-r15
+r0-r12 存储普通数据
+r13:(sp) 栈寄存器
+            异常发生或程序跳转时,保存通用寄存器数据到sp的内存地址;sp是专用的,不能他用
+r14:(lr) 链接寄存器
+            当程序发生跳转时用来保存返回地址
+r15:(pc) 程序计数器
+            1.读:读出来的数据,是当前正在执行的程序地址+8
+            2.写:cpu会跳转到写入的地址处执行代码
+
+功能寄存器:(cpu的状态)
+cpsr(当前程序状态寄存器):
+    N(31位)符号表示位:	1表示结果为负.0表示结果为正.
+    Z(30位)零值表示:	1表示结果为0, 0表示结果非0
+    C(29位)进位标志: 	1表示存在进位,1表示不存借位,0表示没有进位,存在借位	
+    V(28位)溢出标志:	1表示存在溢出,0表示没有溢出
+    J(24位)和T(5位):	共同决定工作状态 00表示arm状态
+    E(9位):				大小端选择位:0小端 1大端
+    I(7位):				irq中断mask位  0为cpu可以中断,1为cpu不中断
+    F(6位):				fiq中断mask位  0为cpu可以中断,1为cpu不中断
+
+    M[4:0]:模式选择位:
+        when '10000' result = usr; // User mode
+        when '10001' result = fiq; // FIQ mode
+        when '10010' result = irq; // IRQ mode
+        when '10011' result = svc; // Supervisor mode
+        when '10110' result = mon; // Monitor mode
+        when '10111' result = abt; // Abort mode
+        when '11010' result = hyp; // Hyp mode
+        when '11011' result = und; // Undefined mode
+        when '11111' result = usr; // System mode uses User mode registers
+		
+spsr(保存的程序状态寄存器):
+		当异常发生,进行模式切换时,用来保存cpsr,保存的过程arm自动完成
+
+
+工作模式切换的方法:
+	可以修改cpsr的低5位来实现arm工作模式的切换,在usr模式不能实现
+	异常都可实现模式切换
